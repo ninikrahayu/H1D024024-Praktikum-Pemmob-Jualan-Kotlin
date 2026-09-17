@@ -4,10 +4,10 @@ Shift KRS: H
 
 ## Pertemuan 4
 <p>
-  <img width="718" height="1599" alt="dark" src="https://github.com/user-attachments/assets/6a3c16ef-2cf2-4db2-a7c4-b5b64bcb7379" />
-  <img width="718" height="1599" alt="light" src="https://github.com/user-attachments/assets/b2af4cb9-ca86-4f99-8cca-34967755926a" />
-  <img width="720" height="1604" alt="WhatsApp Image 2026-09-17 at 10 47 01" src="https://github.com/user-attachments/assets/3afe7f0e-2277-4e0c-85fc-afd3a10bfbee" />
-  <img width="720" height="1604" alt="WhatsApp Image 2026-09-17 at 10 47 01 (1)" src="https://github.com/user-attachments/assets/76e312b7-b7ed-4522-80aa-ebdc3a8e147d" />
+  <img width="250" alt="dark" src="https://github.com/user-attachments/assets/6a3c16ef-2cf2-4db2-a7c4-b5b64bcb7379" />
+  <img width="250" alt="light" src="https://github.com/user-attachments/assets/b2af4cb9-ca86-4f99-8cca-34967755926a" />
+  <img width="250" alt="WhatsApp Image 2026-09-17 at 10 47 01" src="https://github.com/user-attachments/assets/3afe7f0e-2277-4e0c-85fc-afd3a10bfbee" />
+  <img width="250" alt="WhatsApp Image 2026-09-17 at 10 47 01 (1)" src="https://github.com/user-attachments/assets/76e312b7-b7ed-4522-80aa-ebdc3a8e147d" />
 </p>
 
 ## Pertemuan 3
