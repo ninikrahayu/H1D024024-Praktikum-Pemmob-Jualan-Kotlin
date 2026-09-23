@@ -6,8 +6,8 @@ Shift KRS: H
 <p>
   <img width="250" alt="pemmob" src="Dokumentasi/pemmob.jpeg" />
   <img width="250" alt="d" src="Dokumentasi/d.jpeg" />
-  <img width="250" alt="detil" src="Dokumentasi/detil.jpeg" />
   <img width="250" alt="detil2" src="Dokumentasi/detil2.jpeg" />
+  <img width="250" alt="detil" src="Dokumentasi/detil.jpeg" />
   <img width="250" alt="hub" src="Dokumentasi/hub.jpeg" />
   <img width="250" alt="hub2" src="Dokumentasi/hub2.jpeg" />
 </p>
