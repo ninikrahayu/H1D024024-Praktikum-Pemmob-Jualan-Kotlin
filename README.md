@@ -4,7 +4,7 @@ Shift KRS: H
 
 ## Modul 4
 <p>
-  <img width="250" alt="d" src="https://github.com/user-attachments/assets/42f7b264-fced-44da-8e7e-f027400da31c" />
+<img width="250" alt="d" src="https://github.com/user-attachments/assets/42f7b264-fced-44da-8e7e-f027400da31c" />
 <img width="250" alt="pemmob" src="https://github.com/user-attachments/assets/32e74b93-4b97-41b3-98bc-a61e739b6dfc" />
 <img width="250" alt="detil" src="https://github.com/user-attachments/assets/9ce20146-ec24-4c12-a79b-8ba6bebdd1c6" />
 <img width="250" alt="detil2" src="https://github.com/user-attachments/assets/f97e43ea-3ccb-4586-8667-340bac7c1250" />
@@ -17,7 +17,6 @@ Shift KRS: H
   <img width="250" alt="dark" src="https://github.com/user-attachments/assets/6a3c16ef-2cf2-4db2-a7c4-b5b64bcb7379" />
   <img width="250" alt="light" src="https://github.com/user-attachments/assets/b2af4cb9-ca86-4f99-8cca-34967755926a" />
   <img width="250" alt="WhatsApp Image 2026-09-17 at 10 47 01" src="https://github.com/user-attachments/assets/3afe7f0e-2277-4e0c-85fc-afd3a10bfbee" />
-  
   <img width="250" alt="WhatsApp Image 2026-09-17 at 10 47 01 (1)" src="https://github.com/user-attachments/assets/76e312b7-b7ed-4522-80aa-ebdc3a8e147d" />
 </p>
 
