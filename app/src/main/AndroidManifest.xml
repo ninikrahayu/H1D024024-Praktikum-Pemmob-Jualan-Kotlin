@@ -24,6 +24,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.Jualan"
             android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

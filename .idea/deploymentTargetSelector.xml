@@ -6,23 +6,23 @@
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PreviewProduct">
+      <SelectionState runConfigName="PreviewDetailProductDark">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PreviewCategory">
+      <SelectionState runConfigName="PreviewDetailProductLight">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PreviewDaftarProdukDark">
+      <SelectionState runConfigName="HubungiKamiScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PreviewDark">
+      <SelectionState runConfigName="PreviewHubungiKamiLight">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PreviewLight">
+      <SelectionState runConfigName="PreviewHubungiKamiDark">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>

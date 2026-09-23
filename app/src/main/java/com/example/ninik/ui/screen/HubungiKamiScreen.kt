@@ -1,5 +1,9 @@
 package com.example.ninik.ui.screen
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,17 +12,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -30,12 +39,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,31 +54,29 @@ import com.example.ninik.R
 import com.example.ninik.ui.theme.JualanTheme
 import kotlinx.coroutines.launch
 
+// =========================================================================
+// A. STATEFUL: HubungiKamiScreen
+// Menyimpan seluruh state form (Gambar 3 & 4), lalu meneruskannya ke
+// StatelessFormHubungiKami mengikuti pola Unidirectional Data Flow (Gambar 13).
+// =========================================================================
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HubungiKamiScreen(navController: NavController) {
 
-    // Menyimpan input email
-    var emailText by remember {
-        mutableStateOf("")
-    }
+    // ---- Gambar 3: Deklarasi Variabel ----
+    var emailText by remember { mutableStateOf(value = "") }
+    var messageText by remember { mutableStateOf(value = "") }
+    var problemType by rememberSaveable { mutableStateOf(value = "Pilih Tipe Pesan") }
+    var isAgreed by rememberSaveable { mutableStateOf(value = false) }
+    var imageUri by remember { mutableStateOf<Uri?>(value = null) }
 
-    // Menyimpan input pesan
-    var messageText by remember {
-        mutableStateOf("")
-    }
+    // ---- Gambar 4: Deklarasi Variabel status validasi ----
+    val isEmailValid = emailText.contains(other = "@") && emailText.isNotBlank()
+    val isMessageValid = messageText.length >= 10
+    val isFormValid = isEmailValid && isMessageValid && isAgreed && problemType != "Pilih Tipe Pesan"
 
-    // Focus & Keyboard Manager
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-
-    // Untuk menjalankan Snackbar
     val scope = rememberCoroutineScope()
-
-    // State Snackbar
-    val snackbarHostState = remember {
-        SnackbarHostState()
-    }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         topBar = {
@@ -90,14 +96,10 @@ fun HubungiKamiScreen(navController: NavController) {
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = {
-                            navController.popBackStack()
-                        }
+                        onClick = { navController.popBackStack() }
                     ) {
                         Icon(
-                            painter = painterResource(
-                                id = R.drawable.back_icon
-                            ),
+                            painter = painterResource(id = R.drawable.back_icon),
                             contentDescription = "Kembali",
                             tint = Color.White
                         )
@@ -105,177 +107,217 @@ fun HubungiKamiScreen(navController: NavController) {
                 }
             )
         },
-
-        // Snackbar
         snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState
-            )
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { paddingValues ->
+        // ---- Gambar 13: Pemanggilan StatelessFormHubungiKami() ----
+        StatelessFormHubungiKami(
+            modifier = Modifier.padding(paddingValues),
+            email = emailText,
+            onEmailChange = { emailText = it },
+            isEmailValid = isEmailValid,
+            message = messageText,
+            onMessageChange = { messageText = it },
+            isMessageValid = isMessageValid,
+            problemType = problemType,
+            onProblemTypeChange = { problemType = it },
+            isAgreed = isAgreed,
+            onAgreedChange = { isAgreed = it },
+            imageUri = imageUri,
+            onImagePicked = { imageUri = it },
+            isFormValid = isFormValid,
+            onSubmit = {
+                scope.launch {
+                    snackbarHostState.showSnackbar(message = "Pesan Terkirim!")
+                }
+            }
+        )
+    }
+}
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+// =========================================================================
+// B. STATELESS: StatelessFormHubungiKami
+// Hanya menerima data + callback (Gambar 5), tidak menyimpan state sendiri.
+// =========================================================================
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StatelessFormHubungiKami(
+    modifier: Modifier = Modifier,
+    email: String, onEmailChange: (String) -> Unit, isEmailValid: Boolean,
+    message: String, onMessageChange: (String) -> Unit, isMessageValid: Boolean,
+    problemType: String, onProblemTypeChange: (String) -> Unit,
+    isAgreed: Boolean, onAgreedChange: (Boolean) -> Unit,
+    imageUri: Uri?, onImagePicked: (Uri?) -> Unit,
+    isFormValid: Boolean, onSubmit: () -> Unit
+) {
+
+    // ---- Gambar 6: Deklarasi variabel PhotoPicker ----
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> onImagePicked(uri) }
+    )
+
+    // ---- Gambar 7, 8, 9: Column (padding paddingValues dihapus, memakai parameter modifier) ----
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(all = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(
+            text = "Hubungi Kami",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.align(Alignment.Start)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // ---- Field Email (onValueChange -> onEmailChange, isError & supportingText) ----
+        OutlinedTextField(
+            value = email,
+            onValueChange = onEmailChange,
+            label = { Text("Email Anda") },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.mail_icon),
+                    contentDescription = "Email"
+                )
+            },
+            isError = email.isNotEmpty() && !isEmailValid,
+            supportingText = { if (email.isNotEmpty() && !isEmailValid) Text("Format Email Salah") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // ---- Gambar 10: DropdownMenuBox untuk Tipe Pesan ----
+        var expanded by remember { mutableStateOf(value = false) }
+        val options = listOf("Pertanyaan", "Keluhan", "Saran")
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
         ) {
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            // Judul
-            Text(
-                text = "Hubungi Kami",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.align(Alignment.Start)
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Input Email
             OutlinedTextField(
-                value = emailText,
-                onValueChange = {
-                    emailText = it
-                },
-                placeholder = {
-                    Text(
-                        text = "Email Anda",
-                        color = Color(0xFF757575)
-                    )
-                },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.mail_icon),
-                        contentDescription = "Email",
-                        tint = Color(0xFF616161),
-                        modifier = Modifier.size(20.dp)
-                    )
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.background,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = Color(0xFF79747E),
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black
-                ),
-                singleLine = true
+                readOnly = true,
+                value = problemType,
+                onValueChange = { },
+                label = { Text("Tipe Pesan") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                modifier = Modifier.menuAnchor().fillMaxWidth()
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Input Pesan
-            OutlinedTextField(
-                value = messageText,
-                onValueChange = {
-                    messageText = it
-                },
-                placeholder = {
-                    Text(
-                        text = "Pesan",
-                        color = Color(0xFF757575)
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(140.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.background,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = Color(0xFF79747E),
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black
-                )
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Tombol Kirim
-            Button(
-                onClick = {
-
-                    // Validasi email
-                    if (emailText.isBlank()) {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = "Email harus diisi"
-                            )
-                        }
-                        return@Button
-                    }
-
-                    // Validasi pesan
-                    if (messageText.isBlank()) {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = "Pesan harus diisi"
-                            )
-                        }
-                        return@Button
-                    }
-
-                    // Kosongkan inputan
-                    emailText = ""
-                    messageText = ""
-
-                    // Sembunyikan keyboard dan hilangkan fokus
-                    focusManager.clearFocus()
-                    keyboardController?.hide()
-
-                    // Tampilkan notifikasi berhasil
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = "Pesan berhasil terkirim"
-                        )
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.send_icon),
-                        contentDescription = "Kirim",
-                        tint = Color.White,
-                        modifier = Modifier.size(18.dp)
-                    )
-
-                    Spacer(
-                        modifier = Modifier.width(8.dp)
-                    )
-
-                    Text(
-                        text = "Kirim Pesan",
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
+                options.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(text = selectionOption) },
+                        onClick = {
+                            onProblemTypeChange(selectionOption)
+                            expanded = false
+                        }
                     )
                 }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // ---- Field Pesan (pola sama seperti email, sesuai instruksi modul) ----
+        OutlinedTextField(
+            value = message,
+            onValueChange = onMessageChange,
+            label = { Text("Pesan") },
+            isError = message.isNotEmpty() && !isMessageValid,
+            supportingText = { if (message.isNotEmpty() && !isMessageValid) Text("Pesan minimal 10 karakter") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp),
+            shape = MaterialTheme.shapes.medium
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // ---- Tombol Unggah Bukti (memicu photoPickerLauncher, pola sama) ----
+        OutlinedButton(
+            onClick = {
+                photoPickerLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Icon(imageVector = Icons.Default.Check, contentDescription = "Unggah")
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Unggah Bukti (Screenshot / Foto)")
+        }
+
+        // ---- Gambar 11: Tampilan Uri gambar yang dipilih + Checkbox ----
+        if (imageUri != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)) {
+                Row(modifier = Modifier.padding(all = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Check, contentDescription = "File")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("File terpilih: ${imageUri.lastPathSegment}")
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(checked = isAgreed, onCheckedChange = onAgreedChange)
+            Text("Saya menyetujui syarat & ketentuan")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // ---- Gambar 12: Tombol Submit ----
+        Button(
+            onClick = onSubmit,
+            enabled = isFormValid,
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.large
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.send_icon),
+                    contentDescription = "Send"
+                )
+                Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+                Text("Kirim Pesan", style = MaterialTheme.typography.labelLarge)
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    name = "Light Mode"
+)
 @Composable
-fun HubungiKamiScreenPreview() {
-    JualanTheme {
+fun PreviewHubungiKamiLight() {
+    JualanTheme(darkTheme = false) {
+        HubungiKamiScreen(navController = rememberNavController())
+    }
+}
+
+@Preview(
+    showBackground = true,
+    name = "Dark Mode",
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun PreviewHubungiKamiDark() {
+    JualanTheme(darkTheme = true) {
         HubungiKamiScreen(navController = rememberNavController())
     }
 }
