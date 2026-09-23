@@ -2,15 +2,6 @@ Nama: Ninik Rahayu
 NIM: H1D024024  
 Shift KRS: H
 
-## Modul 4
-<p>
-<img width="720" height="1604" alt="hub 2" src="https://github.com/user-attachments/assets/51a21d53-50dc-4b6d-bcfb-fc057a1d67e5" />
-<img width="720" height="1604" alt="hub" src="https://github.com/user-attachments/assets/cb40675e-cb23-4f39-8b2e-32afecb0f1a7" />
-<img width="718" height="1599" alt="detil" src="https://github.com/user-attachments/assets/d28a9673-1e03-4031-90db-21f233547e1b" />
-<img width="718" height="1599" alt="detil2" src="https://github.com/user-attachments/assets/a26c9d88-97b1-44c9-8517-70f4a1ec1615" />
-<img width="718" height="1599" alt="d" src="https://github.com/user-attachments/assets/9abf0622-3e08-452b-a0bf-47bd561eb737" />
-<img width="718" height="1599" alt="pemmob" src="https://github.com/user-attachments/assets/d305a393-6b23-4049-b413-d336c85feaa3" />
-</p>
 
 ## Modul 3
 <p>
