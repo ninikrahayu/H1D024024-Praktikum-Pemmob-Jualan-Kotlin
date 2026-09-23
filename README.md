@@ -4,12 +4,12 @@ Shift KRS: H
 
 ## Modul 4
 <p>
-  <img width="250" alt="pemmob" src="https://github.com/user-attachments/assets/34f876b1-dd11-4370-b033-b1c09758f20b" />
-  <img width="250" alt="d" src="https://github.com/user-attachments/assets/0ff650f0-0a5e-4ff9-8f6c-0389bc334975" />
-  <img width="250" alt="detil2" src="https://github.com/user-attachments/assets/93bb18ed-eb70-45e5-9f65-2c12ce5dc203" />
-  <img width="250" alt="detil" src="https://github.com/user-attachments/assets/caf8c39d-b98e-49b1-ae18-bef8e957e00a" />
-  <img width="250" alt="hub" src="https://github.com/user-attachments/assets/bd01b66b-6d3a-41e6-b1a5-2170601e0993" />
-  <img width="250" alt="hub2" src="https://github.com/user-attachments/assets/e66087d5-606f-4b70-aeda-561beb19c258" />
+  <img width="250" alt="pemmob" src="Dokumentasi/pemmob.jpeg" />
+  <img width="250" alt="d" src="Dokumentasi/d.jpeg" />
+  <img width="250" alt="detil" src="Dokumentasi/detil.jpeg" />
+  <img width="250" alt="detil2" src="Dokumentasi/detil2.jpeg" />
+  <img width="250" alt="hub" src="Dokumentasi/hub.jpeg" />
+  <img width="250" alt="hub2" src="Dokumentasi/hub2.jpeg" />
 </p>
 ## Modul 3
 <p>
