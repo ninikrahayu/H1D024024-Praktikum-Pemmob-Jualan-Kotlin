@@ -4,12 +4,12 @@ Shift KRS: H
 
 ## Modul 4
 <p>
-<img width="250" alt="d" src="https://github.com/user-attachments/assets/42f7b264-fced-44da-8e7e-f027400da31c" />
-<img width="250" alt="pemmob" src="https://github.com/user-attachments/assets/32e74b93-4b97-41b3-98bc-a61e739b6dfc" />
-<img width="250" alt="detil" src="https://github.com/user-attachments/assets/9ce20146-ec24-4c12-a79b-8ba6bebdd1c6" />
-<img width="250" alt="detil2" src="https://github.com/user-attachments/assets/f97e43ea-3ccb-4586-8667-340bac7c1250" />
-<img width="250" alt="hub" src="https://github.com/user-attachments/assets/4b2198a7-f7aa-4209-a0f1-1249a8778c41" />
-<img width="250" alt="hub 2" src="https://github.com/user-attachments/assets/ce3c8af0-10be-43ad-827f-0658d17c1c7a" />
+<img width="720" height="1604" alt="hub 2" src="https://github.com/user-attachments/assets/51a21d53-50dc-4b6d-bcfb-fc057a1d67e5" />
+<img width="720" height="1604" alt="hub" src="https://github.com/user-attachments/assets/cb40675e-cb23-4f39-8b2e-32afecb0f1a7" />
+<img width="718" height="1599" alt="detil" src="https://github.com/user-attachments/assets/d28a9673-1e03-4031-90db-21f233547e1b" />
+<img width="718" height="1599" alt="detil2" src="https://github.com/user-attachments/assets/a26c9d88-97b1-44c9-8517-70f4a1ec1615" />
+<img width="718" height="1599" alt="d" src="https://github.com/user-attachments/assets/9abf0622-3e08-452b-a0bf-47bd561eb737" />
+<img width="718" height="1599" alt="pemmob" src="https://github.com/user-attachments/assets/d305a393-6b23-4049-b413-d336c85feaa3" />
 </p>
 
 ## Modul 3
