@@ -2,6 +2,15 @@ Nama: Ninik Rahayu
 NIM: H1D024024  
 Shift KRS: H
 
+## Modul 5
+<p>
+<img width="250" alt="daftar produk light" src="https://github.com/user-attachments/assets/ecb2d7b6-afd0-4f03-a206-4caca9088060" />
+<img width="250" alt="detail produk dark" src="https://github.com/user-attachments/assets/170afe45-76b4-484a-8151-040e9d385977" />
+<img width="250" alt="daftar produk ark" src="https://github.com/user-attachments/assets/c2cf48de-712d-4ab7-827b-bed6e732ebdb" />
+<img width="250" alt="detail produk light" src="https://github.com/user-attachments/assets/a84c52e6-b468-44b5-aff9-417ee98ae2eb" />
+
+</p>
+
 ## Modul 4
 <p>
   <img width="250" alt="pemmob" src="Dokumentasi/pemmob.jpeg" />
