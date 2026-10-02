@@ -93,7 +93,7 @@ fun BasicInfoScreen(onNavigateToContact: () -> Unit) {
                 text = "Tentang Jualan",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(modifier = Modifier.height(16.dp))

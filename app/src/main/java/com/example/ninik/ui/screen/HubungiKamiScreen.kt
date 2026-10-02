@@ -305,7 +305,7 @@ fun StatelessFormHubungiKami(
 )
 @Composable
 fun PreviewHubungiKamiLight() {
-    JualanTheme(darkTheme = false) {
+    JualanTheme {
         HubungiKamiScreen(navController = rememberNavController())
     }
 }
@@ -317,7 +317,7 @@ fun PreviewHubungiKamiLight() {
 )
 @Composable
 fun PreviewHubungiKamiDark() {
-    JualanTheme(darkTheme = true) {
+    JualanTheme {
         HubungiKamiScreen(navController = rememberNavController())
     }
 }

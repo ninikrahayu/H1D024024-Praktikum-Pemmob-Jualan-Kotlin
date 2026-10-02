@@ -4,6 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +18,7 @@ import com.example.ninik.ui.screen.DaftarProdukScreen
 import com.example.ninik.ui.screen.DetailProductScreen
 import com.example.ninik.ui.screen.HubungiKamiScreen
 import com.example.ninik.ui.theme.JualanTheme
+import com.example.ninik.ui.viewmodel.ProductViewModel
 
 class HomeActivity : ComponentActivity() {
 
@@ -23,34 +29,44 @@ class HomeActivity : ComponentActivity() {
 
         setContent {
             JualanTheme {
-                val navController = rememberNavController()
-
-                NavHost(
-                    navController = navController,
-                    startDestination = "daftar_produk"
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    // Rute 1: Daftar Produk (layar awal)
-                    composable(route = "daftar_produk") {
-                        DaftarProdukScreen(navController = navController)
-                    }
+                    val navController = rememberNavController()
+                    val productViewModel: ProductViewModel = viewModel()
 
-                    // Rute 2: Detail Produk, menerima productId lewat argument
-                    composable(
-                        route = "detail/{productId}",
-                        arguments = listOf(navArgument(name = "productId") {
-                            type = NavType.IntType
-                        })
-                    ) { backStackEntry ->
-                        val productId = backStackEntry.arguments?.getInt("productId") ?: 0
-                        DetailProductScreen(
-                            productId = productId,
-                            navController = navController
-                        )
-                    }
+                    NavHost(
+                        navController = navController,
+                        startDestination = "daftar_produk"
+                    ) {
+                        // Rute 1: Daftar Produk (layar awal)
+                        composable(route = "daftar_produk") {
+                            DaftarProdukScreen(
+                                navController = navController,
+                                viewModel = productViewModel
+                            )
+                        }
 
-                    // Rute 3: Hubungi Kami
-                    composable(route = "hubungi_kami") {
-                        HubungiKamiScreen(navController = navController)
+                        // Rute 2: Detail Produk, menerima productId lewat argument
+                        composable(
+                            route = "detail/{productId}",
+                            arguments = listOf(navArgument(name = "productId") {
+                                type = NavType.IntType
+                            })
+                        ) { backStackEntry ->
+                            val productId = backStackEntry.arguments?.getInt("productId") ?: 0
+                            DetailProductScreen(
+                                productId = productId,
+                                navController = navController,
+                                viewModel = productViewModel
+                            )
+                        }
+
+                        // Rute 3: Hubungi Kami
+                        composable(route = "hubungi_kami") {
+                            HubungiKamiScreen(navController = navController)
+                        }
                     }
                 }
             }
